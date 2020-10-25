@@ -20,6 +20,7 @@ public class CheckItemController {
 
     @GetMapping("/findAll")
     public Result findAll(){
+
         List<CheckItem> list = checkItemService.findAll();
         return new Result(true, MessageConstant.QUERY_CHECKITEM_SUCCESS,list );
     }
