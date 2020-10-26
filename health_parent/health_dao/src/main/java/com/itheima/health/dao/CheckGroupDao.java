@@ -24,4 +24,6 @@ public interface CheckGroupDao {
     void deleteById(int id);
 
     int findSetmealCountByCheckGroupId(int id);
+
+    List<CheckGroup> findAll();
 }

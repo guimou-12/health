@@ -18,6 +18,12 @@ public class CheckGroupController {
     @Reference
     private CheckGroupService checkGroupService;
 
+   @GetMapping("/findAll")
+    public Result findAll(){
+       List<CheckGroup> list =  checkGroupService.findAll();
+       return new Result(true, MessageConstant.QUERY_CHECKGROUP_SUCCESS,list);
+    }
+
     /** 功能描述:
     添加检查组组
     * @return:

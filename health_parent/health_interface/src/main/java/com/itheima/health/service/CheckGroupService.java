@@ -20,4 +20,6 @@ public interface CheckGroupService {
 
     //报异常
     void deleteById(int id) throws HealthException;
+
+    List<CheckGroup> findAll();
 }
