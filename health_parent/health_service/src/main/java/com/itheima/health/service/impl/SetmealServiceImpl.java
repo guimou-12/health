@@ -127,4 +127,16 @@ public class SetmealServiceImpl implements SetmealService {
         setmealDao.deleteById(id);
 
     }
+
+
+    /** 功能描述:
+    删除七牛云上垃圾图片
+    * @return:
+    * @Author: admin
+    * @Date: 2020-10-26 17:28
+    */
+    @Override
+    public List<String> findImgs() {
+        return setmealDao.findImgs();
+    }
 }
