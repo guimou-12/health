@@ -29,7 +29,7 @@ public class SetmealServiceImpl implements SetmealService {
     */
     @Transactional
     @Override
-    public void add(Setmeal setmeal, Integer[] checkgroupIds) {
+    public Integer add(Setmeal setmeal, Integer[] checkgroupIds) {
         //添加套餐
         setmealDao.add(setmeal);
         //获取套餐ID
@@ -40,6 +40,7 @@ public class SetmealServiceImpl implements SetmealService {
                 setmealDao.addSetmealCheckGroup(setmealId,checkgroupId);
             }
         }
+        return setmealId;
     }
 
     /** 功能描述:
@@ -117,7 +118,7 @@ public class SetmealServiceImpl implements SetmealService {
      * @Date: 2020-10-25 23:56
      */
     @Override
-    public void delete(Integer id){
+    public void deleteById(Integer id){
         int count = setmealDao.findOrderCountBySetmealId(id);
         if(count>0){
             throw  new HealthException("已经有订单使用此套餐");
@@ -138,5 +139,32 @@ public class SetmealServiceImpl implements SetmealService {
     @Override
     public List<String> findImgs() {
         return setmealDao.findImgs();
+    }
+
+    /** 功能描述:
+    查询所有套餐
+    * @return: java.util.List<com.itheima.health.pojo.Setmeal>
+    * @Author: admin
+    * @Date: 2020-10-28 20:43
+    */
+    @Override
+    public List<Setmeal> findAll() {
+        return setmealDao.findAll();
+    }
+    
+    /** 功能描述:
+    查询套餐详情
+     --> 一对多 多表查询
+     -->先查套餐 -->在查检查组 -->检查项
+    * @return: com.itheima.health.pojo.Setmeal
+    * @Author: admin
+    * @Date: 2020-10-28 20:43
+    */
+    @Override
+    public Setmeal findDetailById(int id) {
+
+        Setmeal setmeal = setmealDao.findDetailById(id);
+
+        return setmeal;
     }
 }

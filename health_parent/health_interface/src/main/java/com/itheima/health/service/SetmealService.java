@@ -8,7 +8,7 @@ import com.itheima.health.pojo.Setmeal;
 import java.util.List;
 
 public interface SetmealService {
-    void add(Setmeal setmeal, Integer[] checkgroupIds);
+    Integer add(Setmeal setmeal, Integer[] checkgroupIds);
 
     PageResult<Setmeal> findPage(QueryPageBean queryPageBean);
 
@@ -18,7 +18,11 @@ public interface SetmealService {
 
     void update(Setmeal setmeal, Integer[] checkgroupIds);
 
-    void delete(Integer id) throws HealthException;
+    void deleteById(Integer id) throws HealthException;
 
     List<String> findImgs();
+
+    List<Setmeal> findAll();
+
+    Setmeal findDetailById(int id);
 }

@@ -8,6 +8,7 @@
     <option name="excludeFilter" value="" />
   </component>
   <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/health_mobile" />
     <file type="web" url="file://$PROJECT_DIR$/health_service" />
     <file type="web" url="file://$PROJECT_DIR$/health_web" />
   </component>

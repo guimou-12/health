@@ -10,8 +10,11 @@ import com.itheima.health.pojo.Setmeal;
 import com.itheima.health.service.SetmealService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -27,6 +30,8 @@ public class SetmealController {
 
     @Reference
     private SetmealService setmealService;
+    @Autowired
+    private JedisPool jedisPool;
 
     /** 功能描述:
     上传图片
@@ -61,11 +66,17 @@ public class SetmealController {
     }
 
 
-    @RequestMapping("/add")
+    @PostMapping("/add")
     public Result add(@RequestBody Setmeal setmeal, Integer[] checkgroupIds){
-        setmealService.add(setmeal,checkgroupIds);
-        return new Result(true,MessageConstant.ADD_SETMEAL_SUCCESS);
+        // 调用服务添加
+        Integer setmealId = setmealService.add(setmeal,checkgroupIds);
+        Jedis jedis = jedisPool.getResource();
+        String key = "setmeal:static:html";
+        jedis.sadd(key,setmealId+"|1|" + System.currentTimeMillis());
+        jedis.close();
+        return new Result(true, MessageConstant.ADD_SETMEAL_SUCCESS);
     }
+
 
     @PostMapping("/findPage")
     public Result findByPage(@RequestBody QueryPageBean queryPageBean){
@@ -106,9 +117,12 @@ public class SetmealController {
     */
 
     @PostMapping("/update")
-    public Result update(@RequestBody Setmeal setmeal,Integer[] checkgroupIds){
+    public Result update(@RequestBody Setmeal setmeal, Integer[] checkgroupIds){
+        // 调用服务修改
         setmealService.update(setmeal,checkgroupIds);
-
+        Jedis jedis = jedisPool.getResource();
+        jedis.sadd("setmeal:static:html",setmeal.getId() + "|1|" + System.currentTimeMillis());
+        jedis.close();
         return new Result(true, MessageConstant.EDIT_SETMEAL_SUCCESS);
     }
 
@@ -119,9 +133,13 @@ public class SetmealController {
      * @Date: 2020-10-26 0:06
      */
 
-    @RequestMapping("/delete")
-    public Result delete(Integer id){
-        setmealService.delete(id);
+    @PostMapping("/deleteById")
+    public Result deleteById(int id){
+        setmealService.deleteById(id);
+        Jedis jedis = jedisPool.getResource();
+        // 操作符0代表删除
+        jedis.sadd("setmeal:static:html",id + "|0|" + System.currentTimeMillis());
+        jedis.close();
         return new Result(true, MessageConstant.DELETE_SETMEAL_SUCCESS);
     }
 }
