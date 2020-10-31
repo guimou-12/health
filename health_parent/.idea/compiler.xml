@@ -14,6 +14,7 @@
         <module name="health_pojo" />
         <module name="health_service" />
         <module name="health_web" />
+        <module name="springsecurity_demo" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/security
+          http://www.springframework.org/schema/security/spring-security.xsd">
+
+
+    <!--
+    1：定义哪些链接可以放行
+    2：定义哪些链接不可以放行，即需要有角色、权限才可以放行
+    3：认证管理，定义登录账号名和密码，并授予访问的角色、权限
+    在spring-security.xml中主要配置Spring Security的拦截规则和认证管理器。
+    -->
+
+
+    <!-- 所有路径必须以/开头，否则启动报错 -->
+    <!--拦截规则配置-->
+    <security:http auto-config="true" use-expressions="false">
+        <!--拦截所有路径，登录用户必须是拥有ROLE_ADMIN的角色-->
+        <security:intercept-url pattern="/**" access="ROLE_ADMIN"/>
+
+    </security:http>
+
+    <!--认证管理器-->
+    <security:authentication-manager>
+        <!--认证信息提供者，认证信息的来源-->
+        <security:authentication-provider>
+            <!--提供用户信息-->
+            <security:user-service>
+                <!--{noop}使用的是明文,no operation 不要对密码做处理
+                authorities:权限-->
+                <security:user name="admin" authorities="ROLE_ADMIN" password="{noop}admin"/>
+
+            </security:user-service>
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+</beans>

@@ -44,9 +44,17 @@ public class SetmealMobileController {
     * @Date: 2020-10-28 20:39
     */
 
-    @RequestMapping("/findDetailById")
+    @GetMapping("/findDetailById")
     public Result findDetailById(int id){
        Setmeal setmeal =  setmealService.findDetailById(id);
+        setmeal.setImg(QiNiuUtils.DOMAIN+setmeal.getImg());
+        return new Result(true, MessageConstant.QUERY_SETMEAL_SUCCESS,setmeal);
+    }
+
+
+    @GetMapping("/findById")
+    public Result findById(int id){
+        Setmeal setmeal = setmealService.findById(id);
         setmeal.setImg(QiNiuUtils.DOMAIN+setmeal.getImg());
         return new Result(true, MessageConstant.QUERY_SETMEAL_SUCCESS,setmeal);
     }
