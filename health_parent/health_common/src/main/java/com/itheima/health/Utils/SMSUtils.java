@@ -17,8 +17,8 @@ public class SMSUtils {
 	public static final String ORDER_NOTICE = "SMS_159771588";//体检预约成功通知
 	private static final String SIGN_NAEM = "传智健康预约";// 短信的签名
 	private static final String PARAMETER_NAME="code";
-	private static final String ACCESS_KEY="LTAI4GAx3vp6JpnhX973Psfg"; //你的AccessKey ID
-	private static final String SECRET_KEY="P8PHyTphKkhSF69sGdBJzlrn2O80Ot"; //你的AccessKey Secret
+	private static final String ACCESS_KEY="=========="; //你的AccessKey ID
+	private static final String SECRET_KEY="==========="; //你的AccessKey Secret
 
 	public static void main(String[] args) throws ClientException {
 		SMSUtils.sendShortMessage(VALIDATE_CODE,"18273069705","666666");
